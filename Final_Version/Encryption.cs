@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Encryption
 {
     //class for Caesar cypher
-    class Caesar
+    public class Caesar
     {
         //dictionary to access shifted char while cyphering
         private Dictionary<char, char> cypher_table;
@@ -65,33 +66,78 @@ namespace Encryption
         //return string after cyphering
         public string Cypher(string input)
         {
-            string res = "";
+            List<char> list = new List<char>();
             foreach (char c in input)
             {
-                res += cypher_table[c];
+                list.Add(cypher_table[c]);
             }
-            return res;
+            return new string(list.ToArray());
         }
 
         //return string after decyphering
         public string Decypher(string input)
         {
-            string res = "";
+            List<char> list = new List<char>();
             foreach (char c in input)
             {
-                res += decypher_table[c];
+                list.Add(decypher_table[c]);
             }
-            return res;
+            return new string(list.ToArray());
+        }
+
+        //private void AsyncCypher(out string input)
+        //{
+        //    string res = "";
+        //    foreach (char c in input)
+        //    {
+        //        res += decypher_table[c];
+        //    }
+        //}
+
+        public string ParallelCypher(string input)
+        {
+
+            string[] parts = new string[4];
+            parts[0] = input.Substring(0, input.Length / 4);
+            parts[1] = input.Substring(parts[0].Length, input.Length / 2);
+            parts[2] = input.Substring(parts[0].Length + parts[1].Length, input.Length / 4 * 3);
+            parts[3] = input.Substring(parts[0].Length + parts[1].Length + parts[2].Length);
+            Task<string> task1 = new Task<string>(() =>
+               {
+                   parts[0] = Cypher(parts[0]);
+                   return parts[0];
+               });
+            Task<string> task2 = new Task<string>(() =>
+            {
+                parts[1] = Cypher(parts[1]);
+                return parts[1];
+            });
+            Task<string> task3 = new Task<string>(() =>
+            {
+                parts[2] = Cypher(parts[2]);
+                return parts[2];
+            });
+            Task<string> task4 = new Task<string>(() =>
+            {
+                parts[3] = Cypher(parts[3]);
+                return parts[3];
+            });
+            task1.Start();
+            task2.Start();
+            task3.Start();
+            task4.Start();
+            Task.WaitAll(task1, task2, task3, task4);
+            return parts[0] + parts[1] + parts[2] + parts[3];
         }
     }
 
     //class for DES Encryption
-    class Des
+    public class Des
     {
         //bool variable to check if the key exists
         public bool HasKey { get { return key != null; } }
         //grants access to the key to show it to the uset
-        public byte[] Key { get { return key; } }
+        public byte[] Key { get { return key; } set { key = value; } }
         //stores the ke
         private byte[] key;
         //generates the key
@@ -143,7 +189,7 @@ namespace Encryption
                 //initialization vector for more secure encryption of the beginning of the message
                 byte[] IV = { 15, 27, 39, 41, 56, 66, 79, 90 };
                 //array to store char bytecode
-                byte[] array = new byte[text.Length];
+                byte[] array = Encoding.UTF8.GetBytes(text);
 
                 try
                 {
