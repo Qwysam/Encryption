@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Encryption;
 using BlowFish_namespace;
 using System.IO;
+using System.Linq;
 
 namespace TestProjectCourseWork
 {
@@ -25,6 +26,8 @@ namespace TestProjectCourseWork
             des.Key = test_key;
             string text = File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Толстой Лев.Война и мир.Книга 1_des_enc.txt");
             File.WriteAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Толстой Лев.Война и мир.Книга 1_des_dec.txt", des.Decrypt(text));
+            Assert.AreEqual(File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Толстой Лев.Война и мир.Книга 1_des_dec.txt")
+                .SequenceEqual(File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Толстой Лев. Война и мир. Книга 1.txt")), true);
         }
         [TestMethod]
         public void TestMethodBlowFishEncryptFiction()
@@ -39,6 +42,8 @@ namespace TestProjectCourseWork
             BlowFish blowFish = new BlowFish(test_key);
             string text = File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Толстой Лев.Война и мир.Книга 1_blowfish_enc.txt");
             File.WriteAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Толстой Лев.Война и мир.Книга 1_blowfish_dec.txt", blowFish.DecryptCBC(text));
+            Assert.AreEqual(File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Толстой Лев.Война и мир.Книга 1_blowfish_dec.txt")
+               .SequenceEqual(File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Толстой Лев. Война и мир. Книга 1.txt")), true);
         }
         [TestMethod]
         public void TestMethodCaesarEncryptFiction()
@@ -56,6 +61,8 @@ namespace TestProjectCourseWork
             caesar.CreateDictionaryDecypher(13);
             string text = File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Толстой Лев.Война и мир.Книга 1_caesar_enc.txt");
             File.WriteAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Толстой Лев.Война и мир.Книга 1_caesar_dec.txt", caesar.Decypher(text));
+            Assert.AreEqual(File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Толстой Лев.Война и мир.Книга 1_caesar_dec.txt")
+              .SequenceEqual(File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Толстой Лев. Война и мир. Книга 1.txt")), true);
         }
     }
     [TestClass]
@@ -78,6 +85,8 @@ namespace TestProjectCourseWork
             des.Key = test_key;
             string text = File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Леся Українка. Збiрка_des_enc.txt");
             File.WriteAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Леся Українка. Збiрка_des_dec.txt", des.Decrypt(text));
+            Assert.AreEqual(File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Леся Українка. Збiрка_des_dec")
+               .SequenceEqual(File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Леся Українка. Збiрка.txt")), true);
         }
         [TestMethod]
         public void TestMethodBlowFishEncryptFiction()
@@ -92,6 +101,8 @@ namespace TestProjectCourseWork
             BlowFish blowFish = new BlowFish(test_key);
             string text = File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Леся Українка. Збiрка_blowfish_enc.txt");
             File.WriteAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Леся Українка. Збiрка_blowfish_dec.txt", blowFish.DecryptCBC(text));
+            Assert.AreEqual(File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Леся Українка. Збiрка_blowfish_dec.txt")
+              .SequenceEqual(File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Леся Українка. Збiрка.txt")), true);
         }
         [TestMethod]
         public void TestMethodCaesarEncryptFiction()
@@ -109,6 +120,8 @@ namespace TestProjectCourseWork
             caesar.CreateDictionaryDecypher(13);
             string text = File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Леся Українка. Збiрка_caesar_enc.txt");
             File.WriteAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Леся Українка. Збiрка_caesar_dec.txt", caesar.Decypher(text));
+            Assert.AreEqual(File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Леся Українка. Збiрка_caesar_dec.txt")
+              .SequenceEqual(File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Леся Українка. Збiрка.txt")), true);
         }
     }
     [TestClass]
@@ -131,6 +144,8 @@ namespace TestProjectCourseWork
             des.Key = test_key;
             string text = File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Great Expectations_des_enc.txt");
             File.WriteAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Great Expectations_des_dec.txt", des.Decrypt(text));
+            Assert.AreEqual(File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Great Expectations_des_dec")
+               .SequenceEqual(File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Great Expectations.txt")), true);
         }
         [TestMethod]
         public void TestMethodBlowFishEncryptFiction()
@@ -145,6 +160,8 @@ namespace TestProjectCourseWork
             BlowFish blowFish = new BlowFish(test_key);
             string text = File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Great Expectations_blowfish_enc.txt");
             File.WriteAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Great Expectations_blowfish_dec.txt", blowFish.DecryptCBC(text));
+            Assert.AreEqual(File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Great Expectations_blowfish_dec.txt")
+              .SequenceEqual(File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Great Expectations.txt")), true);
         }
         [TestMethod]
         public void TestMethodCaesarEncryptFiction()
@@ -162,6 +179,8 @@ namespace TestProjectCourseWork
             caesar.CreateDictionaryDecypher(13);
             string text = File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Great Expectations_caesar_enc.txt");
             File.WriteAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Great Expectations_caesar_dec.txt", caesar.Decypher(text));
+            Assert.AreEqual(File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Great Expectations_caesar_dec.txt")
+              .SequenceEqual(File.ReadAllText("C:\\Users\\zhdan\\Desktop\\Texts\\Great Expectations.txt")), true);
         }
     }
 }
